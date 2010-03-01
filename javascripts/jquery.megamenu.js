@@ -74,7 +74,18 @@ function MegaMenuMouseOver(ParentNodeNumber, MenuContent, state, MenuLinkClass, 
             RightPos = $(document).width() - 10 - $('.' + MenuLinkClass).eq(ParentNodeNumber).position().left - selfNode['width'] - selfNode['padding-left'] - selfNode['padding-right'] - selfNode['border-left-width'] - selfNode['border-right-width'];
     }
     
-    var TopPos = $('.' + MenuLinkClass).eq(ParentNodeNumber).height() + $('.' + MenuLinkClass).eq(ParentNodeNumber).position().top + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-top").replace(/px/g, '')) + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-bottom").replace(/px/g, '')) + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("border-top-width").replace(/px/g, ''));
+//    var TopPos = $('.' + MenuLinkClass).eq(ParentNodeNumber).height() + $('.' + MenuLinkClass).eq(ParentNodeNumber).position().top + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-top").replace(/px/g, '')) + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-bottom").replace(/px/g, '')) + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("border-top-width").replace(/px/g, ''));
+    
+    var TopPos_A = $('.' + MenuLinkClass).eq(ParentNodeNumber).height(); 
+    var TopPos_B = $('.' + MenuLinkClass).eq(ParentNodeNumber).position().top;
+    var TopPos_C = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-top").replace(/px/g, ''));
+    var TopPos_D = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-bottom").replace(/px/g, ''));
+    var TopPos_E = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("border-top-width").replace(/px/g, ''));
+    var TopPos =  (isNaN(TopPos_A)?0:TopPos_A) + 
+                  (isNaN(TopPos_B)?0:TopPos_B) + 
+                  (isNaN(TopPos_C)?0:TopPos_C) +
+                  (isNaN(TopPos_D)?0:TopPos_D) + 
+                  (isNaN(TopPos_E)?0:TopPos_E);
     
     MenuContent = unescape(MenuContent);
     
@@ -97,17 +108,32 @@ function MegaMenuMouseOver(ParentNodeNumber, MenuContent, state, MenuLinkClass, 
     $("#MegaMenuContentShadow").html('' + MenuContent);
     $("#MegaMenuContentShadow").slideDown("fast");
     
-    $("#MegaMenuContent,#MegaMenuContentShadow").hover(function(){
-        $('#MegaMenuContent').show();
-        $('#MegaMenuContentShadow').show();
-        
-        $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
-        $('.' + MenuLinkClass).eq(ParentNodeNumber).addClass(MenuLinkClass + 'Active');
-    }, function(){
-        $("#MegaMenuContent").hide()
-        $("#MegaMenuContentShadow").hide()
-        $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
-    });
+    if($.fn._hover){
+      $("#MegaMenuContent,#MegaMenuContentShadow")._hover(function(){
+          MenuContentHoverIn(MenuLinkClass, ParentNodeNumber);
+      }, function(){
+          MenuContentHoverOut(MenuLinkClass, ParentNodeNumber);
+      });
+    } else {
+      $("#MegaMenuContent,#MegaMenuContentShadow").hover(function(){
+          MenuContentHoverIn(MenuLinkClass, ParentNodeNumber);
+      }, function(){
+          MenuContentHoverOut(MenuLinkClass, ParentNodeNumber);
+      });
+    }
+}
+
+function MenuContentHoverIn(MenuLinkClass, ParentNodeNumber) {
+  $('#MegaMenuContent').show();
+  $('#MegaMenuContentShadow').show();
+  $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
+  $('.' + MenuLinkClass).eq(ParentNodeNumber).addClass(MenuLinkClass + 'Active');
+}
+
+function MenuContentHoverOut(MenuLinkClass, ParentNodeNumber) {
+  $("#MegaMenuContentShadow").hide()
+  $("#MegaMenuContent").hide()
+  $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
 }
 
 function MegaMenuMouseOut(ParentNodeNumber, MenuLinkClass, MenuContentClass){
