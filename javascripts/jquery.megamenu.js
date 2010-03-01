@@ -23,19 +23,18 @@ jQuery.fn.megamenu = function(ContentClass, Options){
         justify: "left"
     }, Options);
     $(ContentClass).after('  <div id="MegaMenuContentShadow" style="display: none;"></div><div id="MegaMenuContent" style="display: none;"></div>');
-    $(this).mouseover(function(){
+    $(this).hover(function(){
         var MenuContent = $(this).next(ContentClass).html();
         ParentNodeNumber = $('.' + MenuClass).index(this);
         MegaMenuMouseOver(ParentNodeNumber, MenuContent, "click", MenuClass, ContentClass, Options);
         //setTimeout('MegaMenuMouseOver('+ParentNodeNumber+',"'+escape(MenuContent)+'","hover",\''+MenuClass+'\',\''+ContentClass+'\',\''+Options+'\')', 300);
+    },function(){
+        MegaMenuMouseOut(ParentNodeNumber, MenuClass, ContentClass);
     });
     $(this).click(function(){
         var MenuContent = $(this).next('.MegaMenuContent').html();
         ParentNodeNumber = $('.' + MenuClass).index(this);
         MegaMenuMouseOver(ParentNodeNumber, MenuContent, "click", MenuClass, ContentClass, Options);
-    });
-    $(this).mouseout(function(){
-        MegaMenuMouseOut(ParentNodeNumber, MenuClass, ContentClass);
     });
     $(document).bind('click', function(e){
         var $clicked = $(e.target);
@@ -98,14 +97,13 @@ function MegaMenuMouseOver(ParentNodeNumber, MenuContent, state, MenuLinkClass, 
     $("#MegaMenuContentShadow").html('' + MenuContent);
     $("#MegaMenuContentShadow").slideDown("fast");
     
-    $("#MegaMenuContent,#MegaMenuContentShadow").mouseover(function(){
+    $("#MegaMenuContent,#MegaMenuContentShadow").hover(function(){
         $('#MegaMenuContent').show();
         $('#MegaMenuContentShadow').show();
         
         $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
         $('.' + MenuLinkClass).eq(ParentNodeNumber).addClass(MenuLinkClass + 'Active');
-    });
-    $("#MegaMenuContent,#MegaMenuContentShadow").mouseout(function(){
+    }, function(){
         $("#MegaMenuContent").hide()
         $("#MegaMenuContentShadow").hide()
         $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
