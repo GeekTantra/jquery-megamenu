@@ -78,7 +78,7 @@ function MegaMenuMouseOver(ParentNodeNumber, MenuContent, state, MenuLinkClass, 
     
     MenuContent = unescape(MenuContent);
     
-    if (LeftPos) {
+    if (LeftPos || LeftPos === 0) {
         $("#MegaMenuContent").css('left', LeftPos + 'px');
         $("#MegaMenuContentShadow").css('left', (LeftPos) + 'px');
     }
