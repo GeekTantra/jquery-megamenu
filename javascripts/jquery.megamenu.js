@@ -1,144 +1,88 @@
-/*jQuery MegaMenu Plugin
- Author: Devadatta Sahoo
- Author URI: http://www.geektantra.com */
-var isIE6 = navigator.userAgent.toLowerCase().indexOf('msie 6') != -1;
-(function($){
-    $.fn.extend({
-        isChildOf: function(filter_string){
-            var parents = $(this).parents().get();
-            for (j = 0; j < parents.length; j++) {
-                if ($(parents[j]).is(filter_string)) 
-                    return true;
-            }
-            return false;
-        }
+/*
+  jQuery MegaMenu Plugin
+  Author: GeekTantra
+  Author URI: http://www.geektantra.com
+*/
+jQuery.fn.megamenu = function(options) {
+  options = jQuery.extend({
+                              width: "auto",
+                              justify: "left",
+                              activate_action: "hover",
+                              deactivate_action: "mouseleave",
+                              show_method: "simple",
+                              hide_method: "simple",
+                              justify: "left",
+                              enable_js_shadow: true
+                          }, options);
+  this.find("li").each(function(){
+    jQuery(this).addClass("mm-item");
+    jQuery(".mm-item").css({ 'float': options.justify });
+    
+    jQuery(this).find("div:first").addClass("mm-item-content");
+    var mm_item_content = {
+      'element': jQuery(this).find(".mm-item-content"),
+      'width': jQuery(this).find(".mm-item-content").outerWidth(),
+      'height': jQuery(this).find(".mm-item-content").outerHeight(),
+      'left': jQuery(this).find(".mm-item-content").position().left,
+      'top': jQuery(this).find(".mm-item-content").position().top,
+    }
+    jQuery(this).find(".mm-item-content").hide();
+    
+    jQuery(this).find("a:first").addClass("mm-item-link");
+//    if( (jQuery('body').outerWidth() - mm_item_content.left) < mm_item_content.width ) {
+//      mm_item_content.element.position().right = 
+//    }
+    
+    
+//    Activation Method Starts
+    jQuery(this).bind(options.activate_action, function(e){
+      e.stopPropagation();
+      var mm_item_link_obj = jQuery(this).find("a.mm-item-link");
+      mm_item_link_obj.addClass("mm-item-link-hover");
+      var mm_item_content_obj = jQuery(this).find("div.mm-item-content");
+      switch(options.show_method) {
+        case "simple":
+              mm_item_content_obj.show();
+              break;
+        case "slideDown":
+              mm_item_content_obj.slideDown();
+              break;
+        case "fadeIn":
+              mm_item_content_obj.fadeIn();
+              break;
+        default:
+              mm_item_content_obj.each( options.show_method );
+              break;
+      }
     });
-})(jQuery);
-
-jQuery.fn.megamenu = function(ContentClass, Options){
-    var MenuClass = $(this).attr("class").split(" ")[0];
-    var ParentNodeNumber = 0;
-    Options = jQuery.extend({
-        width: "auto",
-        justify: "left"
-    }, Options);
-    $(ContentClass).after('  <div id="MegaMenuContentShadow" style="display: none;"></div><div id="MegaMenuContent" style="display: none;"></div>');
-    $(this).hover(function(){
-        var MenuContent = $(this).next(ContentClass).html();
-        ParentNodeNumber = $('.' + MenuClass).index(this);
-        MegaMenuMouseOver(ParentNodeNumber, MenuContent, "click", MenuClass, ContentClass, Options);
-        //setTimeout('MegaMenuMouseOver('+ParentNodeNumber+',"'+escape(MenuContent)+'","hover",\''+MenuClass+'\',\''+ContentClass+'\',\''+Options+'\')', 300);
-    },function(){
-        MegaMenuMouseOut(ParentNodeNumber, MenuClass, ContentClass);
+//    Activation Method Ends
+//    Deactivation Method Starts
+    jQuery(this).bind(options.deactivate_action, function(e){
+      e.stopPropagation();
+      var mm_item_link_obj = jQuery(this).find("a.mm-item-link");
+      var mm_item_content_obj = jQuery(this).find("div.mm-item-content");
+      switch(options.hide_method) {
+        case "simple":
+              mm_item_content_obj.hide();
+              mm_item_link_obj.removeClass("mm-item-link-hover");
+              break;
+        case "slideUp":
+              mm_item_content_obj.slideUp( function() {
+                mm_item_link_obj.removeClass("mm-item-link-hover");
+              });
+              break;
+        case "fadeOut":
+              mm_item_content_obj.fadeOut( function() {
+                mm_item_link_obj.removeClass("mm-item-link-hover");
+              });
+              break;
+        default:
+              mm_item_content_obj.each( options.hide_method );
+              mm_item_link_obj.removeClass("mm-item-link-hover");
+              break;
+      }
     });
-    $(this).click(function(){
-        var MenuContent = $(this).next('.MegaMenuContent').html();
-        ParentNodeNumber = $('.' + MenuClass).index(this);
-        MegaMenuMouseOver(ParentNodeNumber, MenuContent, "click", MenuClass, ContentClass, Options);
-    });
-    $(document).bind('click', function(e){
-        var $clicked = $(e.target);
-        if ($clicked.isChildOf('#MegaMenuContent') || $clicked.is('#MegaMenuContent') || $clicked.is('.' + MenuClass)) {
-        }
-        else 
-            MegaMenuMouseOut(ParentNodeNumber, MenuClass, ContentClass);
-    });
+//    Deactivation Method Ends
+  });
+  this.find("li:last").after('<li class="clear-fix"></li>');
 };
-
-function MegaMenuMouseOver(ParentNodeNumber, MenuContent, state, MenuLinkClass, MenuContentClass, Options){
-    var MenuLinkClass = (typeof(MenuLinkClass) == 'undefined') ? ".MegaMenuLink" : MenuLinkClass;
-    var MenuContentClass = (typeof(MenuContentClass) == 'undefined') ? ".MegaMenuContent" : MenuContentClass;
-    
-    //var Options = eval('(' + Options + ')');
-    if (state == "hover") 
-        $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
-    $('.' + MenuLinkClass).eq(ParentNodeNumber).addClass(MenuLinkClass + 'Active');
-    
-    var selfNode = new Array();
-    selfNode['width'] = $('.' + MenuLinkClass).eq(ParentNodeNumber).width();
-    selfNode['padding-left'] = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css('padding-left').replace(/px/g, ''));
-    selfNode['padding-right'] = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css('padding-right').replace(/px/g, ''));
-    selfNode['border-left-width'] = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css('border-left-width').replace(/px/g, ''));
-    selfNode['border-right-width'] = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css('border-right-width').replace(/px/g, ''));
-    if (isIE6) 
-        selfNode['width'] = selfNode['width'] + 10;
-    
-    if (Options['justify'] == "left") {
-        var LeftPos = $('.' + MenuLinkClass).eq(ParentNodeNumber).parent().position().left;
-        if (Options['width'] == 'auto') 
-            LeftPos = $('.' + MenuLinkClass).eq(ParentNodeNumber).position().left - 10;
-    }
-    else {
-        var RightPos = $('.' + MenuLinkClass).eq(ParentNodeNumber).parent().position().left;
-        if (Options['width'] == 'auto') 
-            RightPos = $(document).width() - 10 - $('.' + MenuLinkClass).eq(ParentNodeNumber).position().left - selfNode['width'] - selfNode['padding-left'] - selfNode['padding-right'] - selfNode['border-left-width'] - selfNode['border-right-width'];
-    }
-    
-//    var TopPos = $('.' + MenuLinkClass).eq(ParentNodeNumber).height() + $('.' + MenuLinkClass).eq(ParentNodeNumber).position().top + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-top").replace(/px/g, '')) + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-bottom").replace(/px/g, '')) + parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("border-top-width").replace(/px/g, ''));
-    
-    var TopPos_A = $('.' + MenuLinkClass).eq(ParentNodeNumber).height(); 
-    var TopPos_B = $('.' + MenuLinkClass).eq(ParentNodeNumber).position().top;
-    var TopPos_C = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-top").replace(/px/g, ''));
-    var TopPos_D = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("padding-bottom").replace(/px/g, ''));
-    var TopPos_E = parseInt($('.' + MenuLinkClass).eq(ParentNodeNumber).css("border-top-width").replace(/px/g, ''));
-    var TopPos =  (isNaN(TopPos_A)?0:TopPos_A) + 
-                  (isNaN(TopPos_B)?0:TopPos_B) + 
-                  (isNaN(TopPos_C)?0:TopPos_C) +
-                  (isNaN(TopPos_D)?0:TopPos_D) + 
-                  (isNaN(TopPos_E)?0:TopPos_E);
-    
-    MenuContent = unescape(MenuContent);
-    
-    if (LeftPos || LeftPos === 0) {
-        $("#MegaMenuContent").css('left', LeftPos + 'px');
-        $("#MegaMenuContentShadow").css('left', (LeftPos) + 'px');
-    }
-    else {
-        $("#MegaMenuContent").css('right', RightPos + 'px');
-        $("#MegaMenuContentShadow").css('right', (RightPos - 4) + 'px');
-    }
-    $("#MegaMenuContent").css('top', TopPos + 'px');
-    $("#MegaMenuContentShadow").css('top', TopPos + 'px');
-    if (Options['width']) {
-        $("#MegaMenuContent").css('width', Options['width']);
-        $("#MegaMenuContentShadow").css('width', Options['width']);
-    }
-    $("#MegaMenuContent").html('' + MenuContent);
-    $("#MegaMenuContent").slideDown("fast");
-    $("#MegaMenuContentShadow").html('' + MenuContent);
-    $("#MegaMenuContentShadow").slideDown("fast");
-    
-    if($.fn._hover){
-      $("#MegaMenuContent,#MegaMenuContentShadow")._hover(function(){
-          MenuContentHoverIn(MenuLinkClass, ParentNodeNumber);
-      }, function(){
-          MenuContentHoverOut(MenuLinkClass, ParentNodeNumber);
-      });
-    } else {
-      $("#MegaMenuContent,#MegaMenuContentShadow").hover(function(){
-          MenuContentHoverIn(MenuLinkClass, ParentNodeNumber);
-      }, function(){
-          MenuContentHoverOut(MenuLinkClass, ParentNodeNumber);
-      });
-    }
-}
-
-function MenuContentHoverIn(MenuLinkClass, ParentNodeNumber) {
-  $('#MegaMenuContent').show();
-  $('#MegaMenuContentShadow').show();
-  $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
-  $('.' + MenuLinkClass).eq(ParentNodeNumber).addClass(MenuLinkClass + 'Active');
-}
-
-function MenuContentHoverOut(MenuLinkClass, ParentNodeNumber) {
-  $("#MegaMenuContentShadow").hide()
-  $("#MegaMenuContent").hide()
-  $('.' + MenuLinkClass).removeClass(MenuLinkClass + 'Active');
-}
-
-function MegaMenuMouseOut(ParentNodeNumber, MenuLinkClass, MenuContentClass){
-    $('#MegaMenuContent').hide();
-    $('#MegaMenuContentShadow').hide();
-    var MenuLinkClass = (typeof(MenuLinkClass) == 'undefined') ? ".MegaMenuLink" : MenuLinkClass;
-    $('.' + MenuLinkClass).eq(ParentNodeNumber).removeClass(MenuLinkClass + 'Active');
-}
