@@ -10,9 +10,10 @@ body {
 }
 ul.megamenu {
   background-color: #0056b2;
-  margin: 0px;
-  padding: 4px;
+  margin: 0px auto;
+  padding: 5px 10px;
   list-style: none;
+  width: 600px;
 }
 
 ul.megamenu li.mm-item {
@@ -28,7 +29,7 @@ ul.megamenu a.mm-item-link:link, ul.megamenu a.mm-item-link:visited {
   display: inline-block;
   color: #fff;
   padding: 5px 15px;
-  margin: 5px 3px 0px 0px;
+  margin: 0px 3px 0px 0px;
   text-decoration: none;
   z-index: 10;
   border-top: 1px solid transparent;
@@ -51,5 +52,4 @@ ul.megamenu div.mm-item-content {
   position: absolute;
   border: 1px solid #2877B3;
   z-index: 9;
-  margin-top: -1px;
 }
