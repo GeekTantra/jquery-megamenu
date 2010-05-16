@@ -4,6 +4,16 @@
   Author URI: http://www.geektantra.com
 */
 
+ul.megamenu {
+  background-image: url(../images/menu-background.gif);
+  background-repeat: repeat-x;
+  background-position: 0px 0px;
+}
+
+.mm-content-base {
+  background-color: #FFF;
+}
+
 h3 {
   margin: 0px;
   font-size: 16px;
@@ -14,8 +24,14 @@ h3 {
   margin-bottom: 5px;
 }
 
-p {
-  margin: 5px 0px;
+p, blockquote {
+  margin: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+blockquote {
+  padding-left: 50px;
 }
 
 #tabular-content {
@@ -41,6 +57,7 @@ p {
 #form-content fieldset {
   border: 1px solid #CCC;
   margin: 0px;
+  padding: 5px;
 }
 #form-content legend {
   font-size: 11px;
@@ -64,7 +81,6 @@ p {
 
 #list-content, #list-content ul {
   margin: 0px;
-  font-size: 12px;
   padding-left: 20px;
 }
 #list-content li {
@@ -73,12 +89,9 @@ p {
 }
 
 #paragraph-content, #quote-content {
-  font-size: 11px;
   text-align: justify;
 }
 #paragraph-content {
-  width: 500px;
 }
 #quote-content {
-  width: 300px;
 }

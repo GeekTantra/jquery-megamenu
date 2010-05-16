@@ -10,9 +10,6 @@ body {
 }
 ul.megamenu {
   background-color: #888;
-  background-image: url(../images/menu-background.gif);
-  background-repeat: repeat-x;
-  background-position: 0px 0px;
   border-top: 1px solid #888;
   border-bottom: 1px solid #666;
   margin: 0px auto;
@@ -24,19 +21,30 @@ ul.megamenu {
 ul.megamenu li.mm-item {
 }
 
+ul.megamenu li {
+  margin: 0px;
+  padding: 0px;
+}
+
 ul.megamenu li.clear-fix {
   float: none;
   clear: both;
+  margin: 0px;
+  padding: 0px;
+  height: 0px;
+  font-size: 0px;
+  line-height: 0px;
 }
 
 ul.megamenu a.mm-item-link:link, ul.megamenu a.mm-item-link:visited {
   position: relative;
   display: inline-block;
   color: #FFF;
-  padding: 5px 15px;
+  padding: 8px 15px;
   margin: 0px 3px 0px 0px;
   text-decoration: none;
   z-index: 10;
+  font-size: 14px;
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
@@ -52,6 +60,8 @@ ul.megamenu a.mm-item-link-hover:link, ul.megamenu a.mm-item-link-hover:visited 
   border-top: 1px solid #777;
   border-left: 1px solid #777;
   border-right: 1px solid #777;
+  -moz-border-radius: 3px 3px 0px 0px;
+  border-radius: 3px 3px 0px 0px;
 }
 
 ul.megamenu div.mm-item-content {
@@ -60,7 +70,6 @@ ul.megamenu div.mm-item-content {
   position: absolute;
   border: 1px solid #777;
   z-index: 9;
-  white-space: no-wrap;
 }
 
 .mm-content-base {

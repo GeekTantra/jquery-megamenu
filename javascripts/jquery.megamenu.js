@@ -3,6 +3,8 @@
   Author: GeekTantra
   Author URI: http://www.geektantra.com
 */
+var isIE6 = navigator.userAgent.toLowerCase().indexOf('msie 6') != -1;
+
 jQuery.fn.megamenu = function(options) {
   options = jQuery.extend({
                               width: "auto",
@@ -41,8 +43,8 @@ jQuery.fn.megamenu = function(options) {
       $mm_item_content.find(".mm-js-shadow").height( $mm_item_content.height() );
       $mm_item_content.find(".mm-js-shadow").width( $mm_item_content.width() );
       $mm_item_content.find(".mm-js-shadow").css({
-        'top': ($mm_item_content.offset().top + options.shadow_size) + "px",
-        'left': ($mm_item_content.offset().left + options.shadow_size) + "px",
+        'top': ($mm_item_content.offset().top + options.shadow_size) + (isIE6 ? 2 : 0) + "px",
+        'left': ($mm_item_content.offset().left + options.shadow_size) + (isIE6 ? 2 : 0) + "px",
         'opacity': 0.5
       });
     }
