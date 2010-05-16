@@ -40,13 +40,6 @@ jQuery.fn.megamenu = function(options) {
     $mm_item_content.wrapInner('<div class="mm-content-base"></div>');
     if(options.enable_js_shadow == true) {
       $mm_item_content.append('<div class="mm-js-shadow"></div>');
-      $mm_item_content.find(".mm-js-shadow").height( $mm_item_content.height() );
-      $mm_item_content.find(".mm-js-shadow").width( $mm_item_content.width() );
-      $mm_item_content.find(".mm-js-shadow").css({
-        'top': ($mm_item_content.offset().top + options.shadow_size) + (isIE6 ? 2 : 0) + "px",
-        'left': ($mm_item_content.offset().left + options.shadow_size) + (isIE6 ? 2 : 0) + "px",
-        'opacity': 0.5
-      });
     }
     var $mm_timer = 0;
     // Activation Method Starts
@@ -57,7 +50,6 @@ jQuery.fn.megamenu = function(options) {
       clearTimeout($mm_timer);
       $mm_timer = setTimeout(function(){ //Emulate HoverIntent
         mm_item_link_obj.addClass("mm-item-link-hover");
-        
         mm_item_content_obj.css({
           'top': ($mm_item_link.offset().top + $mm_item_link.outerHeight()) - 1 +"px",
           'left': ($mm_item_link.offset().left) - 5 + 'px'
@@ -88,6 +80,15 @@ jQuery.fn.megamenu = function(options) {
               'left': mm_content_left_end + 'px'
             }); // Limit megamenu inside the outer box
           }
+        }
+        if(options.enable_js_shadow == true) {
+          mm_item_content_obj.find(".mm-js-shadow").height( mm_item_content_obj.height() );
+          mm_item_content_obj.find(".mm-js-shadow").width( mm_item_content_obj.width() );
+          mm_item_content_obj.find(".mm-js-shadow").css({
+            'top': (mm_item_content_obj.offset().top + options.shadow_size) + (isIE6 ? 2 : 0) + "px",
+            'left': (mm_item_content_obj.offset().left + options.shadow_size) + (isIE6 ? 2 : 0) + "px",
+            'opacity': 0.5
+          });
         }
         switch(options.show_method) {
           case "simple":
@@ -138,4 +139,5 @@ jQuery.fn.megamenu = function(options) {
 //    Deactivation Method Ends
   });
   this.find("li:last").after('<li class="clear-fix"></li>');
+  this.show();
 };

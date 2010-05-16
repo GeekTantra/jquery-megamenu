@@ -16,6 +16,7 @@ ul.megamenu {
   padding: 5px 10px;
   list-style: none;
   width: 850px;
+  display: none;
 }
 
 ul.megamenu li.mm-item {

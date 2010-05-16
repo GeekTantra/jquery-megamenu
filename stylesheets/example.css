@@ -4,6 +4,34 @@
   Author URI: http://www.geektantra.com
 */
 
+html, body {
+  height: 100%;
+}
+
+#Page {
+  width: 850px;
+  border-left: 1px solid #333;
+  border-right: 1px solid #333;
+  margin: auto;
+  border-collapse: collapse;
+  height: 100%;
+}
+
+#Links {
+  padding: 15px;
+  font-size: 16px;
+  text-align: center;
+}
+
+h1 {
+  font-family: Georgia;
+  font-size: 22px;
+  color: #333;
+  margin: 0px;
+  padding: 20px 15px;
+}
+
+
 ul.megamenu {
   background-image: url(../images/menu-background.gif);
   background-repeat: repeat-x;
@@ -13,6 +41,15 @@ ul.megamenu {
 .mm-content-base {
   background-color: #FFF;
 }
+
+a:link, a:visited {
+  color: #333;
+}
+
+a:hover {
+  color: #666;
+}
+
 
 h3 {
   margin: 0px;
