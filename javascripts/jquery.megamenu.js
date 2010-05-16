@@ -85,8 +85,8 @@ jQuery.fn.megamenu = function(options) {
           mm_item_content_obj.find(".mm-js-shadow").height( mm_item_content_obj.height() );
           mm_item_content_obj.find(".mm-js-shadow").width( mm_item_content_obj.width() );
           mm_item_content_obj.find(".mm-js-shadow").css({
-            'top': (mm_item_content_obj.offset().top + options.shadow_size) + (isIE6 ? 2 : 0) + "px",
-            'left': (mm_item_content_obj.offset().left + options.shadow_size) + (isIE6 ? 2 : 0) + "px",
+            'top': (options.shadow_size) + (isIE6 ? 2 : 0) + "px",
+            'left': (options.shadow_size) + (isIE6 ? 2 : 0) + "px",
             'opacity': 0.5
           });
         }
