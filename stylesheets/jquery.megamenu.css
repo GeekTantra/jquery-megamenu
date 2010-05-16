@@ -5,15 +5,20 @@
 */
 body {
   font-family: "Arial";
-  font-size: 0.9em;
+  font-size: 13px;
   margin: 0px;
 }
 ul.megamenu {
-  background-color: #0056b2;
+  background-color: #888;
+  background-image: url(../images/menu-background.gif);
+  background-repeat: repeat-x;
+  background-position: 0px 0px;
+  border-top: 1px solid #888;
+  border-bottom: 1px solid #666;
   margin: 0px auto;
   padding: 5px 10px;
   list-style: none;
-  width: 600px;
+  width: 850px;
 }
 
 ul.megamenu li.mm-item {
@@ -27,7 +32,7 @@ ul.megamenu li.clear-fix {
 ul.megamenu a.mm-item-link:link, ul.megamenu a.mm-item-link:visited {
   position: relative;
   display: inline-block;
-  color: #fff;
+  color: #FFF;
   padding: 5px 15px;
   margin: 0px 3px 0px 0px;
   text-decoration: none;
@@ -35,21 +40,37 @@ ul.megamenu a.mm-item-link:link, ul.megamenu a.mm-item-link:visited {
   border-top: 1px solid transparent;
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
-  filter: chroma(color=transparent);
+}
+*html ul.megamenu a.mm-item-link:link, *html ul.megamenu a.mm-item-link:visited {
+  border-color: pink;
+  filter: chroma(color=pink);
 }
 
 ul.megamenu a.mm-item-link-hover:link, ul.megamenu a.mm-item-link-hover:visited {
-  color: #0056b2;
+  color: #444;
   background: #FFF;
-  border-top: 1px solid #2877B3;
-  border-left: 1px solid #2877B3;
-  border-right: 1px solid #2877B3;
+  border-top: 1px solid #777;
+  border-left: 1px solid #777;
+  border-right: 1px solid #777;
 }
 
 ul.megamenu div.mm-item-content {
   background: #FFF;
-  padding: 5px;
+  padding: 0px;
   position: absolute;
-  border: 1px solid #2877B3;
+  border: 1px solid #777;
   z-index: 9;
+  white-space: no-wrap;
+}
+
+.mm-content-base {
+  background: #FFF;
+  position: relative;
+  z-index: 11;
+  padding: 10px;
+}
+.mm-js-shadow {
+  background: #555;
+  position: absolute;
+  z-index: 10;
 }
