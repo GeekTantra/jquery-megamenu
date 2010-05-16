@@ -7,8 +7,6 @@ var isIE6 = navigator.userAgent.toLowerCase().indexOf('msie 6') != -1;
 
 jQuery.fn.megamenu = function(options) {
   options = jQuery.extend({
-                              width: "auto",
-                              justify: "left",
                               activate_action: "mouseover",
                               deactivate_action: "mouseleave",
                               show_method: "slideDown",
