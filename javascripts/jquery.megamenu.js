@@ -133,6 +133,7 @@ jQuery.fn.megamenu = function(options) {
               mm_item_link_obj.removeClass("mm-item-link-hover");
               break;
       }
+      if(mm_item_content_obj.length < 1) mm_item_link_obj.removeClass("mm-item-link-hover");
     });
 //    Deactivation Method Ends
   });
