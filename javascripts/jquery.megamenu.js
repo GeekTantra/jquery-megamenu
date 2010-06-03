@@ -137,6 +137,6 @@ jQuery.fn.megamenu = function(options) {
     });
 //    Deactivation Method Ends
   });
-  this.find("li:last").after('<li class="clear-fix"></li>');
+  this.find(">li:last").after('<li class="clear-fix"></li>');
   this.show();
 };
